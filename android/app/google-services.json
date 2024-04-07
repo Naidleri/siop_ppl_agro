@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "655833124441",
+    "firebase_url": "https://ppl-agro-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ppl-agro",
+    "storage_bucket": "ppl-agro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655833124441:android:671ab21fb7c42cd824ab48",
+        "android_client_info": {
+          "package_name": "com.example.siop_ppl_agro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7X7ho4NR3vkqc1A0AxyKncCNjqRpQnvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

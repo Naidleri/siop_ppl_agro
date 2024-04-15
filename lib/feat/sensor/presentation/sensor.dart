@@ -10,6 +10,18 @@ class _SensorPageState extends State<SensorPage> {
   final DatabaseReference dbRef =
       FirebaseDatabase.instance.ref().child("sensor/1");
 
+  double getSoilMoisturePercentage(int soilValue) {
+    // Handle edge cases
+    if (soilValue < 1060) {
+      return 100.0;
+    } else if (soilValue > 2500) {
+      return 0.0;
+    }
+
+    final double normalizedSoil = (soilValue - 1060) / (2500 - 1060);
+    return (1 - normalizedSoil) * 100;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,12 +37,16 @@ class _SensorPageState extends State<SensorPage> {
             int soil = data['soil'];
             int servo = data['servo'];
 
+            double soilMoisturePercentage = getSoilMoisturePercentage(soil);
+
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Temperature: $temperature'),
-                  Text('Soil: $soil'),
+                  Text('Soil Moisture: $soil'),
+                  Text(
+                      'Soil Moisture (%): ${soilMoisturePercentage.toStringAsFixed(1)}'),
                   Text('Servo: $servo'),
                 ],
               ),

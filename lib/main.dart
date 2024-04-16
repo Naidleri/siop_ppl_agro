@@ -25,11 +25,11 @@ class SimpleBlocObserver extends BlocObserver {
 }
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

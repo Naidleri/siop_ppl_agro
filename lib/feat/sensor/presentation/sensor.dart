@@ -8,10 +8,9 @@ class SensorPage extends StatefulWidget {
 
 class _SensorPageState extends State<SensorPage> {
   final DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref().child("sensor/1");
+      FirebaseDatabase.instance.ref("sensor").child("1");
 
   double getSoilMoisturePercentage(int soilValue) {
-    // Handle edge cases
     if (soilValue < 1060) {
       return 100.0;
     } else if (soilValue > 2500) {

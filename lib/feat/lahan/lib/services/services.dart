@@ -16,11 +16,15 @@ class DatabaseMethods {
     }
   }
 
-  Future addLahan(Map<String, dynamic> lahanInfoMap) async {
+  Future<void> addLahan(Map<String, dynamic> lahanInfoMap) async {
     String nextLahanId = await getLahanId();
-    return await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("Lahan")
         .doc(nextLahanId)
         .set(lahanInfoMap);
+  }
+
+  Stream<QuerySnapshot> getLahan() {
+    return FirebaseFirestore.instance.collection('Lahan').snapshots();
   }
 }

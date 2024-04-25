@@ -37,6 +37,10 @@ class _SensorPageState extends State<SensorPage> {
                   Text(
                       'Soil Moisture (%): ${soilMoisturePercentage.toStringAsFixed(1)}'),
                   Text('Servo: $servo'),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("Hapus lahan"),
+                  )
                 ],
               ),
             );

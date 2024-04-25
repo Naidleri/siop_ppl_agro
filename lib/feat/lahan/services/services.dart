@@ -27,4 +27,8 @@ class DatabaseMethods {
   Stream<QuerySnapshot> getLahan() {
     return FirebaseFirestore.instance.collection('Lahan').snapshots();
   }
+
+  Future <void> deleleLahan (String id) async {
+    
+  }
 }

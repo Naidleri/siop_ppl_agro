@@ -2,13 +2,20 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class SensorPage extends StatefulWidget {
+  final String lahanId;
+  SensorPage({required this.lahanId});
+
   @override
   _SensorPageState createState() => _SensorPageState();
 }
 
 class _SensorPageState extends State<SensorPage> {
-  final DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref("sensor").child("1");
+  late final DatabaseReference dbRef;
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref("sensor").child(widget.lahanId);
+  }
 
   double getSoilMoisturePercentage(int soilValue) {
     if (soilValue < 1060) {

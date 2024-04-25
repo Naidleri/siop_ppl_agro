@@ -37,7 +37,10 @@ class _HomeLahanState extends State<HomeLahan> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SensorPage()),
+                          MaterialPageRoute(
+                              builder: (context) => SensorPage(
+                                    lahanId: ds["Id"],
+                                  )),
                         );
                       },
                       child: Container(
@@ -48,6 +51,7 @@ class _HomeLahanState extends State<HomeLahan> {
                             borderRadius: BorderRadius.circular(5)),
                         child: Column(
                           children: [
+                            Text(ds["Id"].toString()),
                             Text(ds["Lahan"].toString()),
                             Text("Umur tanaman :${ds["Umur"]}"),
                           ],

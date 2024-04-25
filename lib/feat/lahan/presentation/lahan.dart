@@ -33,17 +33,25 @@ class _HomeLahanState extends State<HomeLahan> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot ds = snapshot.data.docs[index];
-                    return Container(
-                      margin: const EdgeInsets.only(top: 10, bottom: 10),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        children: [
-                          Text(ds["Lahan"].toString()),
-                          Text("Umur tanaman :${ds["Umur"]}"),
-                        ],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SensorPage()),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Column(
+                          children: [
+                            Text(ds["Lahan"].toString()),
+                            Text("Umur tanaman :${ds["Umur"]}"),
+                          ],
+                        ),
                       ),
                     );
                   })

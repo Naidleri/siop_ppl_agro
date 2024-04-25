@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:siop_ppl_agro/feat/lahan/lib/services/services.dart';
+import 'package:siop_ppl_agro/feat/lahan/services/services.dart';
 import 'package:siop_ppl_agro/feat/sensor/presentation/sensor.dart';
 
 class HomeLahan extends StatefulWidget {

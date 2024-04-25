@@ -1,5 +1,5 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:siop_ppl_agro/feat/sensor/services/services.dart';
 
 class SensorPage extends StatefulWidget {
   final String lahanId;
@@ -10,24 +10,6 @@ class SensorPage extends StatefulWidget {
 }
 
 class _SensorPageState extends State<SensorPage> {
-  late final DatabaseReference dbRef;
-  @override
-  void initState() {
-    super.initState();
-    dbRef = FirebaseDatabase.instance.ref("sensor").child(widget.lahanId);
-  }
-
-  double getSoilMoisturePercentage(int soilValue) {
-    if (soilValue < 1060) {
-      return 100.0;
-    } else if (soilValue > 2500) {
-      return 0.0;
-    }
-
-    final double normalizedSoil = (soilValue - 1060) / (2500 - 1060);
-    return (1 - normalizedSoil) * 100;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +17,7 @@ class _SensorPageState extends State<SensorPage> {
         title: Text('Sensor Data'),
       ),
       body: StreamBuilder(
-        stream: dbRef.onValue,
+        stream: FirebaseService().getSensorDataStream(widget.lahanId),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
             var data = snapshot.data!.snapshot.value;
@@ -43,7 +25,8 @@ class _SensorPageState extends State<SensorPage> {
             int soil = data['soil'];
             int servo = data['servo'];
 
-            double soilMoisturePercentage = getSoilMoisturePercentage(soil);
+            double soilMoisturePercentage =
+                FirebaseService().getSoilMoisturePercentage(soil);
 
             return Center(
               child: Column(

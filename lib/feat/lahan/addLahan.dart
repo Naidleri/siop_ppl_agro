@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:siop_ppl_agro/feat/lahan/lib/services/services.dart';
 
-class addLahan extends StatelessWidget {
-  const addLahan({super.key});
+class AddLahan extends StatelessWidget {
+  const AddLahan({super.key});
 
   @override
   Widget build(BuildContext context) {

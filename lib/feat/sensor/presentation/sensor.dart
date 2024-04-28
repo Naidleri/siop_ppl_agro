@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:siop_ppl_agro/feat/lahan/presentation/addLahan.dart';
+import 'package:siop_ppl_agro/feat/lahan/services/services.dart';
 import 'package:siop_ppl_agro/feat/sensor/services/services.dart';
 
 class SensorPage extends StatefulWidget {
   final String lahanId;
-  SensorPage({required this.lahanId});
+  final String lahanName;
+  SensorPage({required this.lahanId, required this.lahanName});
 
   @override
   _SensorPageState createState() => _SensorPageState();
@@ -14,7 +17,7 @@ class _SensorPageState extends State<SensorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sensor Data'),
+        title: Text('Sensor Data - ${widget.lahanName}'),
       ),
       body: StreamBuilder(
         stream: FirebaseService().getSensorDataStream(widget.lahanId),
@@ -38,7 +41,10 @@ class _SensorPageState extends State<SensorPage> {
                       'Soil Moisture (%): ${soilMoisturePercentage.toStringAsFixed(1)}'),
                   Text('Servo: $servo'),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      String Id = widget.lahanId;
+                      DatabaseMethods().deleteLahan(Id);
+                    },
                     child: const Text("Hapus lahan"),
                   )
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:siop_ppl_agro/feat/lahan/presentation/addLahan.dart';
+import 'package:siop_ppl_agro/feat/lahan/presentation/lahan.dart';
 import 'package:siop_ppl_agro/feat/lahan/services/services.dart';
 import 'package:siop_ppl_agro/feat/sensor/services/services.dart';
 
@@ -44,6 +45,25 @@ class _SensorPageState extends State<SensorPage> {
                     onPressed: () {
                       String Id = widget.lahanId;
                       DatabaseMethods().deleteLahan(Id);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Lahan berhasil dihapus"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeLahan()),
+                                    );
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            );
+                          });
                     },
                     child: const Text("Hapus lahan"),
                   )
@@ -51,7 +71,39 @@ class _SensorPageState extends State<SensorPage> {
               ),
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: Column(
+                children: [
+                  Text("sensor belum dipasang"),
+                  ElevatedButton(
+                    onPressed: () {
+                      String Id = widget.lahanId;
+                      DatabaseMethods().deleteLahan(Id);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Lahan berhasil dihapus"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeLahan()),
+                                    );
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: const Text("Hapus lahan"),
+                  )
+                ],
+              ),
+            );
           }
         },
       ),

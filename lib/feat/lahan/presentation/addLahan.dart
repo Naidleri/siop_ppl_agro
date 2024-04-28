@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:siop_ppl_agro/feat/lahan/presentation/lahan.dart';
 import 'package:siop_ppl_agro/feat/lahan/services/services.dart';
 
 class AddLahan extends StatelessWidget {
@@ -55,9 +56,15 @@ class AddLahan extends StatelessWidget {
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.CENTER,
                         timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
+                        backgroundColor: Colors.green,
                         textColor: Colors.white,
-                        fontSize: 16.0)
+                        fontSize: 16.0),
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeLahan(),
+                      ),
+                    )
                   });
             },
             child: const Text('Tambah lahan'),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:siop_ppl_agro/feat/lahan/presentation/addLahan.dart';
 import 'package:siop_ppl_agro/feat/lahan/services/services.dart';
 import 'package:siop_ppl_agro/feat/sensor/presentation/sensor.dart';
 
@@ -40,6 +41,7 @@ class _HomeLahanState extends State<HomeLahan> {
                           MaterialPageRoute(
                               builder: (context) => SensorPage(
                                     lahanId: ds["Id"],
+                                    lahanName: ds["Lahan"],
                                   )),
                         );
                       },
@@ -75,7 +77,17 @@ class _HomeLahanState extends State<HomeLahan> {
           children: [
             Expanded(
               child: allLahan(),
-            )
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddLahan(),
+                    ),
+                  );
+                },
+                child: Text("Tambah lahan"))
           ],
         ),
       ),

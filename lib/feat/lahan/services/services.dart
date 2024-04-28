@@ -9,10 +9,11 @@ class DatabaseMethods {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      int lastId = int.parse(querySnapshot.docs.first.id.substring(5));
-      return 'lahan${lastId + 1}';
+      int lastId = int.parse(querySnapshot.docs.first.id);
+      //  int lastId = int.parse(querySnapshot.docs.first.id.substring(5));
+      return '${lastId + 1}';
     } else {
-      return 'lahan1';
+      return '1';
     }
   }
 
@@ -28,7 +29,7 @@ class DatabaseMethods {
     return FirebaseFirestore.instance.collection('Lahan').snapshots();
   }
 
-  Future <void> deleleLahan (String id) async {
-    
+  Future<void> deleteLahan(String id) async {
+    await FirebaseFirestore.instance.collection("Lahan").doc(id).delete();
   }
 }

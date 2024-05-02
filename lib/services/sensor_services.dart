@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 
-class FirebaseService {
+class SensorService {
   Stream getSensorDataStream(String lahanId) {
     return FirebaseDatabase.instance.ref("sensor").child(lahanId).onValue;
   }

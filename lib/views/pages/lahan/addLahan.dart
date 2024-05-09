@@ -17,7 +17,7 @@ class AddLahan extends StatelessWidget {
           builder: (BuildContext context) {
             return SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +31,7 @@ class AddLahan extends StatelessWidget {
                       width: double.infinity,
                       height: 1,
                       color: Colors.black,
-                      padding: EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 10),
                     ),
                     const SizedBox(
                       height: 20,
@@ -52,7 +52,7 @@ class AddLahan extends StatelessWidget {
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     const Text(
                       "Umur tanaman",
                       style:
@@ -111,7 +111,7 @@ class AddLahan extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomeLahan(),
+                                  builder: (context) => const HomeLahan(),
                                 ),
                               );
                             },
@@ -144,8 +144,7 @@ class AddLahan extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor:
-            const Color.fromRGBO(37, 204, 162, 1), // Custom green color
-        padding: EdgeInsets.zero,
+            const Color.fromRGBO(24, 152, 119, 1), // Custom green color
         textStyle: const TextStyle(fontSize: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),

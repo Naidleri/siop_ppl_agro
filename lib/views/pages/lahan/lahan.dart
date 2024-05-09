@@ -24,21 +24,25 @@ class _HomeLahanState extends State<HomeLahan> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderText(),
-          Deskripsi(),
+          const HeaderText(),
+          const Deskripsi(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(child: Image.asset("assets/images/orang.png")),
               Center(
                 child: Container(
-                  padding: EdgeInsets.only(right: 30, top: 10),
-                  child: Text("Mau menambah lahan kah?"),
+                  padding: const EdgeInsets.only(right: 30, top: 10),
+                  child: const Text("Mau menambah lahan kah?"),
                 ),
               ),
             ],
           ),
-          AddLahan(),
+          Center(
+              child: Container(
+            padding: const EdgeInsets.only(right: 30, top: 10),
+            child: const AddLahan(),
+          )),
           Expanded(
             child: Consumer<LahanProvider>(
               builder: (context, lahanProvider, _) {
@@ -65,7 +69,7 @@ class _HomeLahanState extends State<HomeLahan> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       width: 60,
                                       height: 50,
                                       child: Center(
@@ -85,8 +89,7 @@ class _HomeLahanState extends State<HomeLahan> {
                                         ),
                                       ),
                                     ),
-                                    // Spacer between columns
-                                    Container(
+                                    SizedBox(
                                       width: 140,
                                       child: Text(
                                         ds["Lahan"].toString(),
@@ -128,7 +131,7 @@ class HeaderText extends StatelessWidget {
           "assets/images/circle-left.png",
         ),
         Container(
-          margin: EdgeInsets.only(left: 20, top: 30),
+          margin: const EdgeInsets.only(left: 20, top: 30),
           child: RichText(
             text: const TextSpan(
               children: [
@@ -165,7 +168,7 @@ class Deskripsi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+      margin: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
       child: const Text(
         " Selamat, kebun anda \n memiliki pertumbuhan yang \n signifikan!!!!",
         textAlign: TextAlign.left,
@@ -226,7 +229,7 @@ class _listState extends State<list> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 60,
                                     height: 50,
                                     child: Center(
@@ -246,8 +249,7 @@ class _listState extends State<list> {
                                       ),
                                     ),
                                   ),
-                                  // Spacer between columns
-                                  Container(
+                                  SizedBox(
                                     width: 140,
                                     child: Text(
                                       ds["Lahan"].toString(),
@@ -274,47 +276,3 @@ class _listState extends State<list> {
     );
   }
 }
-
-//  Expanded(
-//                 child: Consumer<LahanProvider>(
-//                   builder: (context, lahanProvider, _) {
-//                     return StreamBuilder(
-//                       stream: lahanProvider.getLahan(),
-//                       builder: (BuildContext context, AsyncSnapshot snapshot) {
-//                         return snapshot.hasData
-//                             ? ListView.builder(
-//                                 itemCount: snapshot.data.docs.length,
-//                                 itemBuilder: (context, index) {
-//                                   DocumentSnapshot ds =
-//                                       snapshot.data.docs[index];
-//                                   return GestureDetector(
-//                                     onTap: () {
-//                                       Navigator.push(
-//                                         context,
-//                                         MaterialPageRoute(
-//                                           builder: (context) => SensorPage(
-//                                             lahanId: ds["Id"],
-//                                             lahanName: ds["Lahan"],
-//                                           ),
-//                                         ),
-//                                       );
-//                                     },
-//                                     child: Container(
-//                                       margin: const EdgeInsets.only(
-//                                           top: 10, bottom: 10),
-//                                       width: MediaQuery.of(context).size.width,
-//                                       decoration: BoxDecoration(
-//                                         border: Border.all(width: 1),
-//                                         borderRadius: BorderRadius.circular(5),
-//                                       ),
-//                                       child: Column(
-//                                           Text(ds["Lahan"].toString()),
-//                                         ],
-//                                       ),
-//                                     ),
-//                                   );
-//                                 },
-//                               )
-//                             : Container();
-//                       },
-//                     );

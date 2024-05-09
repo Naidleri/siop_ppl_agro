@@ -40,7 +40,7 @@ class _HomeLahanState extends State<HomeLahan> {
           ),
           Center(
               child: Container(
-            padding: const EdgeInsets.only(right: 30, top: 10),
+            padding: const EdgeInsets.only(right: 30, top: 10, bottom: 2),
             child: const AddLahan(),
           )),
           Expanded(
@@ -51,6 +51,7 @@ class _HomeLahanState extends State<HomeLahan> {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     return snapshot.hasData
                         ? ListView.builder(
+                            shrinkWrap: true,
                             itemCount: snapshot.data.docs.length,
                             itemBuilder: (context, index) {
                               DocumentSnapshot ds = snapshot.data.docs[index];
@@ -66,42 +67,51 @@ class _HomeLahanState extends State<HomeLahan> {
                                     ),
                                   );
                                 },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 60,
-                                      height: 50,
-                                      child: Center(
-                                        child: Container(
-                                          width: 32,
-                                          height: 32,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color:
-                                                Color.fromRGBO(224, 255, 24, 1),
-                                          ),
-                                          child: Image.asset(
-                                            "assets/images/siram.png",
-                                            width: 20,
-                                            height: 20,
+                                child: Container(
+                                  padding: const EdgeInsets.all(2),
+                                  margin: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 60,
+                                        height: 50,
+                                        child: Center(
+                                          child: Container(
+                                            width: 32,
+                                            height: 32,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color.fromRGBO(
+                                                  224, 255, 24, 1),
+                                            ),
+                                            child: Image.asset(
+                                              "assets/images/siram.png",
+                                              width: 20,
+                                              height: 20,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 140,
-                                      child: Text(
-                                        ds["Lahan"].toString(),
-                                        style: const TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
+                                      SizedBox(
+                                        width: 140,
+                                        child: Text(
+                                          ds["Lahan"].toString(),
+                                          style: const TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -180,99 +190,6 @@ class Deskripsi extends StatelessWidget {
           color: Color.fromRGBO(9, 55, 49, 1),
         ),
       ),
-    );
-  }
-}
-
-class list extends StatefulWidget {
-  const list({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<list> createState() => _listState();
-}
-
-class _listState extends State<list> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Consumer<LahanProvider>(
-            builder: (context, lahanProvider, _) {
-              return StreamBuilder(
-                stream: lahanProvider.getLahan(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return snapshot.hasData
-                      ? ListView.builder(
-                          itemCount: snapshot.data.docs.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot ds = snapshot.data.docs[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SensorPage(
-                                      lahanId: ds["Id"],
-                                      lahanName: ds["Lahan"],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 60,
-                                    height: 50,
-                                    child: Center(
-                                      child: Container(
-                                        width: 32,
-                                        height: 32,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color:
-                                              Color.fromRGBO(224, 255, 24, 1),
-                                        ),
-                                        child: Image.asset(
-                                          "assets/images/siram.png",
-                                          width: 20,
-                                          height: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 140,
-                                    child: Text(
-                                      ds["Lahan"].toString(),
-                                      style: const TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        )
-                      : Container();
-                },
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 }

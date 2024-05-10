@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:siop_ppl_agro/models/sensorModel.dart';
+import 'package:siop_ppl_agro/services/history_services.dart';
 import 'package:siop_ppl_agro/services/sensor_services.dart';
 
 class SensorProvider extends ChangeNotifier {
@@ -13,6 +14,7 @@ class SensorProvider extends ChangeNotifier {
     _sensorService.getSensorDataStream(lahanId).listen((event) {
       final Map<dynamic, dynamic> data =
           event.snapshot.value as Map<dynamic, dynamic>;
+
       final int servo = data['servo'] as int;
       final int soil = data['soil'] as int;
       final double soilMoisture =

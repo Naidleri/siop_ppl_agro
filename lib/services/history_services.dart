@@ -4,7 +4,6 @@ import 'package:siop_ppl_agro/models/historyModel.dart';
 
 class HistoryServices {
   final _database = FirebaseDatabase.instance.ref("sensor");
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Stream getSensorDataStream() {
     return _database.onChildAdded;

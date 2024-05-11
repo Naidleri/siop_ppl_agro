@@ -7,6 +7,8 @@ class SensorHistoryProvider extends ChangeNotifier {
   final HistoryServices _service = HistoryServices();
   int _sensorCount = 0;
   final List<SensorHistoryData> _sensorDataList = [];
+  final _firestore = FirebaseFirestore.instance;
+  final int maxHistoryEntries = 5;
 
   int get sensorCount => _sensorCount;
   List<SensorHistoryData> get sensorDataList => _sensorDataList;
@@ -18,7 +20,13 @@ class SensorHistoryProvider extends ChangeNotifier {
       final servo = data['servo'] as int;
 
       if (servo == 90) {
-        sendDataToFirestore(key, servo, data);
+        _firestore.collection('history').doc(key).get().then((docSnapshot) {
+          if (docSnapshot.exists) {
+            updateHistory(key, servo);
+          } else {
+            sendHistoryData(key, servo);
+          }
+        });
       }
 
       _sensorDataList.add(SensorHistoryData(key, servo, data));
@@ -26,14 +34,14 @@ class SensorHistoryProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
-  Future<void> sendDataToFirestore(
-      String key, int servo, Map<dynamic, dynamic> data) async {
+
+  Future<void> sendHistoryData(String key, int servo) async {
     try {
       DateTime now = DateTime.now();
       String formattedDate =
           '${now.day}-${now.month}-${now.year} ${now.hour}:${now.minute}:${now.second}';
-      await FirebaseFirestore.instance.collection("history").doc(key).set({
-        'date': formattedDate,
+      await _firestore.collection("history").doc(key).set({
+        'tanggal': [formattedDate],
         'servo': servo,
       });
     } catch (error) {
@@ -41,26 +49,18 @@ class SensorHistoryProvider extends ChangeNotifier {
     }
   }
 
-  void monitorServoValue(String key, int servo) {
-    if (servo == 90) {
-      updateHistory(key, servo);
-    }
-  }
-
-  Future<void> updateHistory(
-    String key,
-    int servo,
-  ) async {
+  Future<void> updateHistory(String key, int servo) async {
     try {
+      // Mendapatkan tanggal sekarang
       DateTime now = DateTime.now();
       String formattedDate =
-          '${now.day}-${now.month}-${now.year} ${now.hour}:${now.minute}:${now.second}';
-      await FirebaseFirestore.instance.collection("history").doc(key).update({
-        'date': formattedDate,
-        'servo': servo,
+          "${now.day}-${now.month}-${now.year} ${now.hour}:${now.minute}:${now.second}";
+      await _firestore.collection("history").doc(key).update({
+        'tanggal': FieldValue.arrayUnion([formattedDate]),
       });
+      // Menambahkan data baru ke dalam array
     } catch (error) {
-      print("$error");
+      print("Error: $error");
     }
   }
 }

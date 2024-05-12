@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/services/lahan_services.dart';
 
 class LahanProvider extends ChangeNotifier {
@@ -22,9 +21,5 @@ class LahanProvider extends ChangeNotifier {
   Future<void> deleteLahan(String id) async {
     await _lahanServices.deleteLahan(id);
     notifyListeners();
-  }
-
-  static LahanProvider of(BuildContext context, {bool listen = true}) {
-    return Provider.of<LahanProvider>(context, listen: listen);
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
+import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
+import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
 class SensorPage extends StatelessWidget {
   final String lahanId;
@@ -80,14 +83,22 @@ class SensorPage extends StatelessWidget {
                           fontFamily: 'Poppins',
                           fontSize: 12,
                         )),
-                    ElevatedButton(
-                      onPressed: () => (context),
-                      child: const Text("Hapus lahan"),
-                    ),
                   ],
                 );
               },
             ),
+          ),
+          ElevatedButton(
+            onPressed: () => (
+              LahanProvider().deleteLahan(lahanId),
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeLahan(),
+                ),
+              )
+            ),
+            child: const Text("Hapus lahan"),
           ),
           Container(
             color: Colors.red,
@@ -105,6 +116,7 @@ class SensorPage extends StatelessWidget {
               ),
             ),
           ),
+          //const HistoryPage(),
         ],
       ),
     );

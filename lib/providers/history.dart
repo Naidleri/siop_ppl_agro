@@ -51,14 +51,12 @@ class SensorHistoryProvider extends ChangeNotifier {
 
   Future<void> updateHistory(String key, int servo) async {
     try {
-      // Mendapatkan tanggal sekarang
       DateTime now = DateTime.now();
       String formattedDate =
           "${now.day}-${now.month}-${now.year} ${now.hour}:${now.minute}:${now.second}";
       await _firestore.collection("history").doc(key).update({
         'tanggal': FieldValue.arrayUnion([formattedDate]),
       });
-      // Menambahkan data baru ke dalam array
     } catch (error) {
       print("Error: $error");
     }

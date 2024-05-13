@@ -9,7 +9,6 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Tambahkan widget Scaffold sebagai parent
       appBar: AppBar(
         title: Text('Sensor History'),
       ),

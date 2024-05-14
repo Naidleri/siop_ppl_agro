@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/addLahan.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeLahan extends StatefulWidget {
   const HomeLahan({Key? key}) : super(key: key);
@@ -13,11 +13,6 @@ class HomeLahan extends StatefulWidget {
 }
 
 class _HomeLahanState extends State<HomeLahan> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,94 +34,91 @@ class _HomeLahanState extends State<HomeLahan> {
             ],
           ),
           Center(
-              child: Container(
-            padding: const EdgeInsets.only(right: 30, top: 10, bottom: 2),
-            child: const AddLahan(),
-          )),
-          ChangeNotifierProvider(
-              create: (context) => LahanProvider(),
-              child: Expanded(
-                child: Consumer<LahanProvider>(
-                  builder: (context, lahanProvider, child) {
-                    return StreamBuilder(
-                      stream: lahanProvider.getLahan(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        return snapshot.hasData
-                            ? ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.docs.length,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot ds =
-                                      snapshot.data.docs[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SensorPage(
-                                            lahanId: ds["Id"],
-                                            lahanName: ds["Lahan"],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(2),
-                                      margin: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            height: 50,
-                                            child: Center(
-                                              child: Container(
-                                                width: 32,
-                                                height: 32,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Color.fromRGBO(
-                                                      224, 255, 24, 1),
-                                                ),
-                                                child: Image.asset(
-                                                  "assets/images/siram.png",
-                                                  width: 20,
-                                                  height: 20,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 140,
-                                            child: Text(
-                                              ds["Lahan"].toString(),
-                                              style: const TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+            child: Container(
+              padding: const EdgeInsets.only(right: 30, top: 10, bottom: 2),
+              child: const AddLahan(),
+            ),
+          ),
+          Expanded(
+            child: Consumer<LahanProvider>(
+              builder: (context, lahanProvider, child) {
+                return StreamBuilder(
+                  stream: lahanProvider.getLahan(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return snapshot.hasData
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot ds = snapshot.data.docs[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SensorPage(
+                                        lahanId: ds["Id"],
+                                        lahanName: ds["Lahan"],
                                       ),
                                     ),
                                   );
                                 },
-                              )
-                            : Container();
-                      },
-                    );
+                                child: Container(
+                                  padding: const EdgeInsets.all(2),
+                                  margin: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 60,
+                                        height: 50,
+                                        child: Center(
+                                          child: Container(
+                                            width: 32,
+                                            height: 32,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color.fromRGBO(
+                                                  224, 255, 24, 1),
+                                            ),
+                                            child: Image.asset(
+                                              "assets/images/siram.png",
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 140,
+                                        child: Text(
+                                          ds["Lahan"].toString(),
+                                          style: const TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : Container();
                   },
-                ),
-              )),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -135,8 +127,8 @@ class _HomeLahanState extends State<HomeLahan> {
 
 class HeaderText extends StatelessWidget {
   const HeaderText({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +169,8 @@ class HeaderText extends StatelessWidget {
 
 class Deskripsi extends StatelessWidget {
   const Deskripsi({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

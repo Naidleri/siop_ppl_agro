@@ -47,7 +47,6 @@ class AddLahan extends StatelessWidget {
                     TextField(
                       controller: lahancontroller,
                       decoration: const InputDecoration(
-                        labelText: 'Masukkan nama lahan',
                         hintText: 'Nama lahan',
                         border: OutlineInputBorder(),
                       ),
@@ -64,8 +63,7 @@ class AddLahan extends StatelessWidget {
                     TextField(
                       controller: umurcontroller,
                       decoration: const InputDecoration(
-                        labelText: 'Masukkan umur tanaman',
-                        hintText: 'Umur tanaman dalam bulan',
+                        hintText: 'Umur tanaman',
                         border: OutlineInputBorder(),
                       ),
                     ),

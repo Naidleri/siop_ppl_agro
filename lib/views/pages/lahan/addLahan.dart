@@ -6,7 +6,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class AddLahan extends StatelessWidget {
   final FlutterLocalNotificationsPlugin notificationsPlugin;
 
-  const AddLahan({Key? key, required this.notificationsPlugin}) : super(key: key);
+  const AddLahan({Key? key, required this.notificationsPlugin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,13 @@ class AddLahan extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         showModalBottomSheet(
+          isScrollControlled: true, // Ensure that the modal is scrollable
           context: context,
           builder: (BuildContext context) {
             return SingleChildScrollView(
+              // Wrap with SingleChildScrollView
+              padding: MediaQuery.of(context)
+                  .viewInsets, // Adjust padding based on keyboard insets
               child: Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(

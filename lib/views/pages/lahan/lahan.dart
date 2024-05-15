@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/addLahan.dart';
@@ -6,7 +7,9 @@ import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeLahan extends StatefulWidget {
-  const HomeLahan({Key? key}) : super(key: key);
+  final FlutterLocalNotificationsPlugin notificationsPlugin;
+  const HomeLahan({Key? key, required this.notificationsPlugin})
+      : super(key: key);
 
   @override
   State<HomeLahan> createState() => _HomeLahanState();
@@ -36,7 +39,9 @@ class _HomeLahanState extends State<HomeLahan> {
           Center(
             child: Container(
               padding: const EdgeInsets.only(right: 30, top: 10, bottom: 2),
-              child: const AddLahan(),
+              child: AddLahan(
+                notificationsPlugin: widget.notificationsPlugin,
+              ),
             ),
           ),
           Expanded(
@@ -59,6 +64,8 @@ class _HomeLahanState extends State<HomeLahan> {
                                       builder: (context) => SensorPage(
                                         lahanId: ds["Id"],
                                         lahanName: ds["Lahan"],
+                                        notificationPlugin:
+                                            widget.notificationsPlugin,
                                       ),
                                     ),
                                   );

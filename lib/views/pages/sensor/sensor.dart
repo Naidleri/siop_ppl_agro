@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
@@ -7,13 +8,19 @@ import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 class SensorPage extends StatelessWidget {
   final String lahanId;
   final String lahanName;
+  final FlutterLocalNotificationsPlugin notificationPlugin;
 
-  SensorPage({required this.lahanId, required this.lahanName});
+  const SensorPage({
+    Key? key,
+    required this.lahanId,
+    required this.lahanName,
+    required this.notificationPlugin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SensorProvider(lahanId),
+      create: (context) => SensorProvider(lahanId, notificationPlugin),
       child: Scaffold(
         body: Column(
           children: [
@@ -117,7 +124,9 @@ class SensorPage extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomeLahan(),
+                    builder: (context) => HomeLahan(
+                      notificationsPlugin: notificationPlugin,
+                    ),
                   ),
                 );
               },

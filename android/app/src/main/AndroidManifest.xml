@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
-        android:label="siop_ppl_agro"
+        android:label="SIOP"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
@@ -37,7 +37,8 @@
             android:value="high_importance_channel"/>
 
         <!-- Receiver untuk notifikasi yang dijadwalkan -->
-        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" android:exported="true">
+        
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

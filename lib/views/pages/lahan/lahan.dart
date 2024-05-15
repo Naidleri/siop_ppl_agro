@@ -56,98 +56,103 @@ class _HomeLahanState extends State<HomeLahan> {
               ),
             ),
           ),
-          Expanded(
-            child: Consumer<LahanProvider>(
-              builder: (context, lahanProvider, child) {
-                return StreamBuilder(
-                  stream: lahanProvider.getLahan(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
-                    if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
-                      return const Center(
-                        child: Text(
-                          'Lahan belum ada',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      );
-                    }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot ds = snapshot.data.docs[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SensorPage(
-                                  lahanId: ds["Id"],
-                                  lahanName: ds["Lahan"],
-                                  notificationPlugin:
-                                      widget.notificationsPlugin,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 60,
-                                  height: 50,
-                                  child: Center(
-                                    child: Container(
-                                      width: 32,
-                                      height: 32,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color.fromRGBO(224, 255, 24, 1),
-                                      ),
-                                      child: Image.asset(
-                                        "assets/images/siram.png",
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 140,
-                                  child: Text(
-                                    ds["Lahan"].toString(),
-                                    style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
+          Container(
+            child: Expanded(
+              child: Consumer<LahanProvider>(
+                builder: (context, lahanProvider, child) {
+                  return StreamBuilder(
+                    stream: lahanProvider.getLahan(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'Lahan belum ada',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
                             ),
                           ),
                         );
-                      },
-                    );
-                  },
-                );
-              },
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot ds = snapshot.data.docs[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SensorPage(
+                                    lahanId: ds["Id"],
+                                    lahanName: ds["Lahan"],
+                                    notificationPlugin:
+                                        widget.notificationsPlugin,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(2),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                    height: 50,
+                                    child: Center(
+                                      child: Container(
+                                        width: 32,
+                                        height: 32,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              Color.fromRGBO(224, 255, 24, 1),
+                                        ),
+                                        child: Image.asset(
+                                          "assets/images/siram.png",
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 140,
+                                    child: Text(
+                                      ds["Lahan"].toString(),
+                                      style: const TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
+import 'package:siop_ppl_agro/views/fragment/deletebutton.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 
 class SensorPage extends StatelessWidget {
@@ -120,15 +121,7 @@ class SensorPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                LahanProvider().deleteLahan(lahanId);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeLahan(
-                      notificationsPlugin: notificationPlugin,
-                    ),
-                  ),
-                );
+                DeleteLahanButton(context, notificationPlugin, lahanId);
               },
               child: const Text("Hapus lahan"),
             ),

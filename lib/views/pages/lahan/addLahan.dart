@@ -17,13 +17,11 @@ class AddLahan extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         showModalBottomSheet(
-          isScrollControlled: true, // Ensure that the modal is scrollable
+          isScrollControlled: true,
           context: context,
           builder: (BuildContext context) {
             return SingleChildScrollView(
-              // Wrap with SingleChildScrollView
-              padding: MediaQuery.of(context)
-                  .viewInsets, // Adjust padding based on keyboard insets
+              padding: MediaQuery.of(context).viewInsets,
               child: Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -114,11 +112,16 @@ class AddLahan extends StatelessWidget {
                                 "Umur": umurcontroller.text,
                               };
                               await LahanServices().addLahan(lahanInfoMap);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomeLahan(
-                                    notificationsPlugin: notificationsPlugin,
+                              Navigator.pop(context);
+
+                              // Tambahkan widget Text sebagai tanda bahwa lahan berhasil ditambahkan
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Sukses, lahan berhasil ditambahkan',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                    ),
                                   ),
                                 ),
                               );

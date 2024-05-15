@@ -27,7 +27,6 @@ class SensorPage extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              color: Colors.blue,
               margin: const EdgeInsets.only(top: 60, bottom: 20),
               child: ElevatedButton(
                 onPressed: () {
@@ -41,7 +40,6 @@ class SensorPage extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.red,
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 10),
               child: const Text(
@@ -126,7 +124,6 @@ class SensorPage extends StatelessWidget {
               child: const Text("Hapus lahan"),
             ),
             Container(
-              color: Colors.red,
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 10),
               child: const Text(

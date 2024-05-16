@@ -9,19 +9,17 @@ import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 class SensorPage extends StatelessWidget {
   final String lahanId;
   final String lahanName;
-  final FlutterLocalNotificationsPlugin notificationPlugin;
 
   const SensorPage({
     Key? key,
     required this.lahanId,
     required this.lahanName,
-    required this.notificationPlugin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SensorProvider(lahanId, notificationPlugin),
+      create: (context) => SensorProvider(lahanId),
       child: Scaffold(
         body: Column(
           children: [
@@ -119,7 +117,7 @@ class SensorPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                DeleteLahanButton(context, notificationPlugin, lahanId);
+                DeleteLahanButton(context, lahanId);
               },
               child: const Text("Hapus lahan"),
             ),

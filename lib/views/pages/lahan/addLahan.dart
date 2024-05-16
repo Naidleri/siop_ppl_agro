@@ -4,11 +4,7 @@ import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class AddLahan extends StatelessWidget {
-  final FlutterLocalNotificationsPlugin notificationsPlugin;
-
-  const AddLahan({Key? key, required this.notificationsPlugin})
-      : super(key: key);
-
+  const AddLahan({Key? key});
   @override
   Widget build(BuildContext context) {
     TextEditingController lahancontroller = TextEditingController();

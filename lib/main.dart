@@ -4,6 +4,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/firebase_options.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
+import 'package:siop_ppl_agro/providers/notifikasi.dart';
+import 'package:siop_ppl_agro/providers/sensor.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
@@ -33,6 +35,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LahanProvider()),
+        ProxyProvider<SensorProvider, Notifikasi>(
+          update: (_, sensorProvider, __) =>
+              Notifikasi(notificationsPlugin, sensorProvider),
+        ),
       ],
       child: MaterialApp(
         title: 'PPl-Agro SIOP',

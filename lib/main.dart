@@ -7,7 +7,6 @@ import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/notifikasi.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
-import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

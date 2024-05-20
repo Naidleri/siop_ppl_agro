@@ -109,8 +109,6 @@ class AddLahan extends StatelessWidget {
                               };
                               await LahanServices().addLahan(lahanInfoMap);
                               Navigator.pop(context);
-
-                              // Tambahkan widget Text sebagai tanda bahwa lahan berhasil ditambahkan
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(
@@ -150,8 +148,7 @@ class AddLahan extends StatelessWidget {
         );
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            const Color.fromRGBO(24, 152, 119, 1), // Custom green color
+        backgroundColor: const Color.fromRGBO(24, 152, 119, 1),
         textStyle: const TextStyle(fontSize: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),

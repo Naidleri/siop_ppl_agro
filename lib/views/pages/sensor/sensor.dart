@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
 import 'package:siop_ppl_agro/views/fragment/deletebutton.dart';
-import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 
 class SensorPage extends StatelessWidget {
   final String lahanId;
@@ -52,13 +49,16 @@ class SensorPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              width: 400,
-              child: Center(
-                child: Image.asset(
-                  "assets/images/ph meter 1.png",
-                  width: 150,
-                  height: 200,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 400,
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/ph meter 1.png",
+                    width: 150,
+                    height: 200,
+                  ),
                 ),
               ),
             ),
@@ -75,34 +75,44 @@ class SensorPage extends StatelessWidget {
                       final sensorData = sensorSnapshot.data?.snapshot?.value;
                       if (sensorData != null) {
                         final temperature =
-                            sensorData['temperature'] ?? 'Unknown';
+                            sensorData['temperature'] ?? 'Error';
+                        final soilNormal = sensorData['soil'];
                         final soilMoisture =
-                            sensorData['soilMoisture'] ?? 'Unknown';
-                        final servo = sensorData['servo'] ?? 'Unknown';
+                            sensorData['soilMoisture'] ?? 'Error';
+                        final servo = sensorData['servo'] ?? 'Error';
 
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('$lahanName'),
                             Text(
-                              'Temperature: $temperature',
+                              '$lahanName',
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              'Temperature: $temperature °C',
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 12,
+                                fontSize: 14,
+                                color: Color.fromRGBO(24, 152, 119, 1),
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              'Soil Moisture: $soilMoisture%',
+                              'Soil Moisture : $soilNormal',
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 12,
+                                fontSize: 14,
+                                color: Color.fromRGBO(24, 152, 119, 1),
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
                               'Servo: $servo',
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 12,
+                                fontSize: 14,
+                                color: Color.fromRGBO(24, 152, 119, 1),
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],
@@ -115,11 +125,19 @@ class SensorPage extends StatelessWidget {
                 );
               },
             ),
-            ElevatedButton(
-              onPressed: () {
-                DeleteLahanButton(context, lahanId);
-              },
-              child: const Text("Hapus lahan"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  DeleteLahanButton(context, lahanId);
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                child: const Text(
+                  "Hapus lahan",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             Container(
               alignment: Alignment.centerLeft,
@@ -136,7 +154,6 @@ class SensorPage extends StatelessWidget {
                 ),
               ),
             ),
-            //const HistoryPage(),
           ],
         ),
       ),

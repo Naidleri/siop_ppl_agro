@@ -1,14 +1,6 @@
 class HistoryData {
   final int servo;
-  final List<String> tanggal;
+  final List<String> timestamp;
 
-  HistoryData({required this.servo, required this.tanggal});
-}
-
-class SensorHistoryData {
-  final String key;
-  final int servo;
-  final Map<dynamic, dynamic> data;
-
-  const SensorHistoryData(this.key, this.servo, this.data);
+  HistoryData({required this.servo, required this.timestamp});
 }

@@ -1,42 +1,68 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/history.dart';
 
-class HistoryPage extends StatelessWidget {
-  const HistoryPage({Key? key});
+class HistoryScreen extends StatelessWidget {
+  final String lahanId;
+
+  HistoryScreen({required this.lahanId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sensor History'),
+        title: Text('Riwayat Lahan $lahanId'),
       ),
-      body: ChangeNotifierProvider(
-        create: (context) => SensorHistoryProvider(),
-        child: Consumer<SensorHistoryProvider>(
-            builder: (context, provider, child) {
-          if (provider.sensorDataList.isEmpty) {
-            return Text("No sensor data yet");
-          }
-          return Column(
-            children: [
-              Text("Total Sensors: ${provider.sensorCount}"),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: provider.sensorDataList.length,
-                  itemBuilder: (context, index) {
-                    final sensorData = provider.sensorDataList[index];
-                    return ListTile(
-                      title: Text(sensorData.key),
-                      subtitle: Text(sensorData.servo.toString()),
-                    );
-                  },
-                ),
-              ),
-            ],
+      body: Consumer<HistoryProvider>(
+        builder: (context, historyProvider, child) {
+          return StreamBuilder(
+            stream: historyProvider.getHistory(lahanId),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+
+              if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+                return Center(
+                  child: Text(
+                    'Riwayat belum tersedia',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  String timestampString =
+                      ds['timestamp']; // Assuming "timestamp" is a string field
+
+                  return ListTile(
+                    title: Text(
+                      timestampString,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           );
-        }),
+        },
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:siop_ppl_agro/services/lahan_services.dart';
+import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
 
 class AddLahan extends StatefulWidget {
   const AddLahan({Key? key});
@@ -171,6 +172,16 @@ class _AddLahanState extends State<AddLahan> {
                                           style: TextStyle(
                                             fontFamily: 'Poppins',
                                           ),
+                                        ),
+                                      ),
+                                    );
+                                    // Navigasi ke halaman detail lahan
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SensorPage(
+                                          lahanId: Id,
+                                          lahanName: lahancontroller.text,
                                         ),
                                       ),
                                     );

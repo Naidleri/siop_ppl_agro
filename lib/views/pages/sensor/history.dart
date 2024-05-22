@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/history.dart';
+import 'package:intl/intl.dart';
 
 class HistoryScreen extends StatelessWidget {
   final String lahanId;
@@ -46,6 +47,11 @@ class HistoryScreen extends StatelessWidget {
                       DocumentSnapshot ds = snapshot.data.docs[index];
                       String timestampString = ds['timestamp'];
 
+                      DateTime timestamp =
+                          DateTime.parse(timestampString).toLocal();
+                      String formattedTimestamp =
+                          DateFormat('HH:mm:ss | yyyy-MM-dd').format(timestamp);
+
                       return Container(
                         padding: const EdgeInsets.all(2),
                         margin: const EdgeInsets.symmetric(
@@ -59,7 +65,7 @@ class HistoryScreen extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(5),
                           child: Text(
-                            timestampString,
+                            formattedTimestamp,
                             style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 16,

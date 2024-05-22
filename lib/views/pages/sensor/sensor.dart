@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
 import 'package:siop_ppl_agro/views/fragment/deletebutton.dart';
+import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
 class SensorPage extends StatelessWidget {
   final String lahanId;
@@ -154,6 +155,7 @@ class SensorPage extends StatelessWidget {
                 ),
               ),
             ),
+            HistoryScreen(lahanId: lahanId)
           ],
         ),
       ),

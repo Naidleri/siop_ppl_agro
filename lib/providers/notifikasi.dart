@@ -1,5 +1,4 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
 
 class Notifikasi {

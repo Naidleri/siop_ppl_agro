@@ -1,9 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:siop_ppl_agro/models/sensorModel.dart';
-import 'package:siop_ppl_agro/services/history_services.dart';
-import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/services/sensor_services.dart';
 
 class SensorProvider extends ChangeNotifier {

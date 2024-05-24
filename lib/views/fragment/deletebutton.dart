@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 
-Future<dynamic> DeleteLahanButton(BuildContext context, String lahanId) {
+Future<void> DeleteLahanButton(BuildContext context, String lahanId) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -31,6 +31,7 @@ Future<dynamic> DeleteLahanButton(BuildContext context, String lahanId) {
                     actions: [
                       TextButton(
                         onPressed: () {
+                          Navigator.of(context).pop();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

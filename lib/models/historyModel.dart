@@ -1,6 +1,17 @@
-class HistoryData {
-  final int servo;
-  final List<String> timestamp;
+class History {
+  final String timestamp;
 
-  HistoryData({required this.servo, required this.timestamp});
+  History({required this.timestamp});
+
+  factory History.fromMap(Map<String, dynamic> map) {
+    return History(
+      timestamp: map["timestamp"] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'timestamp': timestamp,
+    };
+  }
 }

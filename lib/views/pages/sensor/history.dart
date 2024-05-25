@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:siop_ppl_agro/models/historyModel.dart';
 import 'package:siop_ppl_agro/providers/history.dart';
 import 'package:intl/intl.dart';
 
@@ -13,9 +14,10 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(child: Consumer<HistoryProvider>(
       builder: (context, historyProvider, child) {
-        return StreamBuilder<QuerySnapshot>(
+        return StreamBuilder<List<History>>(
           stream: historyProvider.getHistory(lahanId),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<History>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             }
@@ -24,7 +26,7 @@ class HistoryScreen extends StatelessWidget {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
 
-            if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(
                 child: Text(
                   'Riwayat belum tersedia',
@@ -42,10 +44,10 @@ class HistoryScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: snapshot.data.docs.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      DocumentSnapshot ds = snapshot.data.docs[index];
-                      String timestampString = ds['timestamp'];
+                      History history = snapshot.data![index];
+                      String timestampString = history.timestamp;
 
                       DateTime timestamp =
                           DateTime.parse(timestampString).toLocal();

@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:siop_ppl_agro/models/historyModel.dart';
 
 class HistoryServices {
-  Stream<QuerySnapshot> getHistory(String id) {
-    return FirebaseFirestore.instance.collection("history$id").snapshots();
+  Stream<List<History>> getHistory(String id) {
+    return FirebaseFirestore.instance.collection("history$id").snapshots().map(
+        (snaphsot) =>
+            snaphsot.docs.map((doc) => History.fromMap(doc.data())).toList());
   }
 }

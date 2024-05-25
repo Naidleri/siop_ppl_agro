@@ -6,7 +6,7 @@ import 'package:siop_ppl_agro/services/history_services.dart';
 class HistoryProvider extends ChangeNotifier {
   final HistoryServices _serviceHistory = HistoryServices();
 
-  Stream<QuerySnapshot> getHistory(String id) {
+  Stream<List<History>> getHistory(String id) {
     return _serviceHistory.getHistory(id);
   }
 }

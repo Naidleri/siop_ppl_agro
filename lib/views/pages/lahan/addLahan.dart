@@ -8,12 +8,12 @@ class AddLahan extends StatefulWidget {
   @override
   _AddLahanState createState() => _AddLahanState();
 }
-
 class _AddLahanState extends State<AddLahan> {
   final TextEditingController lahancontroller = TextEditingController();
   final TextEditingController umurcontroller = TextEditingController();
   bool isFormValid = false;
   bool isUmurValid = true;
+  int? _umur;
 
   @override
   void initState() {
@@ -25,6 +25,7 @@ class _AddLahanState extends State<AddLahan> {
   void _validateForm() {
     setState(() {
       isUmurValid = int.tryParse(umurcontroller.text) != null;
+      _umur = int.tryParse(umurcontroller.text);
       isFormValid = lahancontroller.text.isNotEmpty &&
           umurcontroller.text.isNotEmpty &&
           isUmurValid;
@@ -160,7 +161,7 @@ class _AddLahanState extends State<AddLahan> {
                                     Map<String, dynamic> lahanInfoMap = {
                                       "Id": Id,
                                       "Lahan": lahancontroller.text,
-                                      "Umur": umurcontroller.text,
+                                      "Umur": _umur,
                                     };
                                     await LahanServices()
                                         .addLahan(lahanInfoMap);

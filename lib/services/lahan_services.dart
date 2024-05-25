@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class LahanServices {
   Future<String> getLahanId() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('Lahan')
+        .collection('lahan')
         .orderBy('Id', descending: true)
         .limit(1)
         .get();
@@ -20,16 +20,16 @@ class LahanServices {
   Future<void> addLahan(Map<String, dynamic> lahanInfoMap) async {
     String nextLahanId = await getLahanId();
     await FirebaseFirestore.instance
-        .collection("Lahan")
+        .collection("lahan")
         .doc(nextLahanId)
         .set(lahanInfoMap);
   }
 
   Stream<QuerySnapshot> getLahan() {
-    return FirebaseFirestore.instance.collection('Lahan').snapshots();
+    return FirebaseFirestore.instance.collection('lahan').snapshots();
   }
 
   Future<void> deleteLahan(String id) async {
-    await FirebaseFirestore.instance.collection("Lahan").doc(id).delete();
+    await FirebaseFirestore.instance.collection("lahan").doc(id).delete();
   }
 }

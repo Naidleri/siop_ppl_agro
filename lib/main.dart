@@ -7,9 +7,9 @@ import 'package:siop_ppl_agro/providers/history.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/notifikasi.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
+import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,9 +39,14 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LahanProvider()),
         ChangeNotifierProvider(create: (context) => HistoryProvider()),
+        ChangeNotifierProvider(
+            create: (context) => SensorProvider('your_lahan_id')),
         ProxyProvider<SensorProvider, Notifikasi>(
-          update: (_, sensorProvider, __) =>
-              Notifikasi(notificationsPlugin, sensorProvider),
+          update: (context, sensorProvider, __) {
+            final notificationService =
+                NotificationService(notificationsPlugin);
+            return Notifikasi(notificationService, sensorProvider);
+          },
         ),
       ],
       child: MaterialApp(
@@ -50,7 +55,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: HomeLahan()),
+          home: const HomeLahan()),
     );
   }
 }

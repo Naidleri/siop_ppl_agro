@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:siop_ppl_agro/models/lahanModel.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/addLahan.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeLahan extends StatefulWidget {
   const HomeLahan({Key? key}) : super(key: key);
@@ -55,13 +55,14 @@ class _HomeLahanState extends State<HomeLahan> {
             child: Expanded(
               child: Consumer<LahanProvider>(
                 builder: (context, lahanProvider, child) {
-                  return StreamBuilder(
+                  return StreamBuilder<List<Lahan>>(
                     stream: lahanProvider.getLahan(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Lahan>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       }
-                      if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(
                           child: Text(
                             'Lahan belum ada',
@@ -76,17 +77,17 @@ class _HomeLahanState extends State<HomeLahan> {
                       }
                       return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: snapshot.data.docs.length,
+                        itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          DocumentSnapshot ds = snapshot.data.docs[index];
+                          Lahan lahan = snapshot.data![index];
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => SensorPage(
-                                    lahanId: ds["Id"],
-                                    lahanName: ds["Lahan"],
+                                    lahanId: lahan.id,
+                                    lahanName: lahan.nama,
                                   ),
                                 ),
                               );
@@ -127,7 +128,7 @@ class _HomeLahanState extends State<HomeLahan> {
                                   SizedBox(
                                     width: 140,
                                     child: Text(
-                                      ds["Lahan"].toString(),
+                                      lahan.nama,
                                       style: const TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 12,
@@ -148,7 +149,6 @@ class _HomeLahanState extends State<HomeLahan> {
               ),
             ),
           ),
-          
         ],
       ),
     );

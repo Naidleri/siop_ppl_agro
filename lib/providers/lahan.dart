@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:siop_ppl_agro/models/lahanModel.dart';
 import 'package:siop_ppl_agro/services/lahan_services.dart';
 
 class LahanProvider extends ChangeNotifier {
@@ -9,12 +10,12 @@ class LahanProvider extends ChangeNotifier {
     return _lahanServices.getLahanId();
   }
 
-  Future<void> addLahan(Map<String, dynamic> lahanInfoMap) async {
-    await _lahanServices.addLahan(lahanInfoMap);
+  Future<void> addLahan(Lahan lahan) async {
+    await _lahanServices.addLahan(lahan);
     notifyListeners();
   }
 
-  Stream<QuerySnapshot> getLahan() {
+  Stream<List<Lahan>> getLahan() {
     return _lahanServices.getLahan();
   }
 

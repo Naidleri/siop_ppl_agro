@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:siop_ppl_agro/models/lahanModel.dart';
+import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/services/lahan_services.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
 
@@ -8,6 +11,7 @@ class AddLahan extends StatefulWidget {
   @override
   _AddLahanState createState() => _AddLahanState();
 }
+
 class _AddLahanState extends State<AddLahan> {
   final TextEditingController lahancontroller = TextEditingController();
   final TextEditingController umurcontroller = TextEditingController();
@@ -156,16 +160,24 @@ class _AddLahanState extends State<AddLahan> {
                           child: ElevatedButton(
                             onPressed: isFormValid
                                 ? () async {
+                                    // Mendapatkan instance dari LahanProvider
+                                    final lahanProvider =
+                                        Provider.of<LahanProvider>(context,
+                                            listen: false);
+                                    // Mendapatkan ID lahan
                                     String Id =
-                                        await LahanServices().getLahanId();
-                                    Map<String, dynamic> lahanInfoMap = {
-                                      "Id": Id,
-                                      "Lahan": lahancontroller.text,
-                                      "Umur": _umur,
-                                    };
-                                    await LahanServices()
-                                        .addLahan(lahanInfoMap);
+                                        await lahanProvider.getLahanId();
+                                    // Membuat objek Lahan berdasarkan input pengguna
+                                    Lahan lahan = Lahan(
+                                      id: Id,
+                                      nama: lahancontroller.text,
+                                      umur: _umur!,
+                                    );
+                                    // Menambahkan lahan menggunakan provider
+                                    await lahanProvider.addLahan(lahan);
+                                    // Menutup bottom sheet
                                     Navigator.pop(context);
+                                    // Menampilkan snackbar sukses
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text(

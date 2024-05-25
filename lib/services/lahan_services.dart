@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:siop_ppl_agro/models/lahanModel.dart';
 
 class LahanServices {
   Future<String> getLahanId() async {
@@ -10,23 +11,24 @@ class LahanServices {
 
     if (querySnapshot.docs.isNotEmpty) {
       int lastId = int.parse(querySnapshot.docs.first.id);
-      //  int lastId = int.parse(querySnapshot.docs.first.id.substring(5));
       return '${lastId + 1}';
     } else {
       return '1';
     }
   }
 
-  Future<void> addLahan(Map<String, dynamic> lahanInfoMap) async {
+  Future<void> addLahan(Lahan lahan) async {
     String nextLahanId = await getLahanId();
     await FirebaseFirestore.instance
         .collection("lahan")
         .doc(nextLahanId)
-        .set(lahanInfoMap);
+        .set(lahan.toMap());
   }
 
-  Stream<QuerySnapshot> getLahan() {
-    return FirebaseFirestore.instance.collection('lahan').snapshots();
+  Stream<List<Lahan>> getLahan() {
+    return FirebaseFirestore.instance.collection('lahan').snapshots().map(
+        (snapshot) =>
+            snapshot.docs.map((doc) => Lahan.fromMap(doc.data())).toList());
   }
 
   Future<void> deleteLahan(String id) async {

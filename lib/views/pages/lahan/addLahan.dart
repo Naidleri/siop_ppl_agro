@@ -162,24 +162,18 @@ class _AddLahanState extends State<AddLahan> {
                           child: ElevatedButton(
                             onPressed: isFormValid
                                 ? () async {
-                                    // Mendapatkan instance dari LahanProvider
                                     final lahanProvider =
                                         Provider.of<LahanProvider>(context,
                                             listen: false);
-                                    // Mendapatkan ID lahan
-                                    String Id =
+                                    int Id =
                                         await lahanProvider.getLahanId();
-                                    // Membuat objek Lahan berdasarkan input pengguna
                                     Lahan lahan = Lahan(
                                       id: Id,
                                       nama: lahancontroller.text,
                                       umur: _umur!,
                                     );
-                                    // Menambahkan lahan menggunakan provider
                                     await lahanProvider.addLahan(lahan);
-                                    // Menutup bottom sheet
                                     Navigator.pop(context);
-                                    // Menampilkan snackbar sukses
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text(
@@ -190,7 +184,6 @@ class _AddLahanState extends State<AddLahan> {
                                         ),
                                       ),
                                     );
-                                    // Navigasi ke halaman detail lahan
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

@@ -40,9 +40,7 @@ class _HomeLahanState extends State<HomeLahan> {
           Center(
             child: Container(
               padding: const EdgeInsets.only(right: 20, top: 10, bottom: 2),
-              child: AddLahan(
-                notificationService: widget.notificationService,
-              ),
+              child: AddLahan(notificationService: widget.notificationService),
             ),
           ),
           Container(
@@ -57,104 +55,99 @@ class _HomeLahanState extends State<HomeLahan> {
               ),
             ),
           ),
-          Container(
-            child: Expanded(
-              child: Consumer<LahanProvider>(
-                builder: (context, lahanProvider, child) {
-                  return StreamBuilder<List<Lahan>>(
-                    stream: lahanProvider.getLahan(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Lahan>> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            'Lahan belum ada',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
+          Expanded(
+            child: Consumer<LahanProvider>(
+              builder: (context, lahanProvider, child) {
+                return StreamBuilder<List<Lahan>>(
+                  stream: lahanProvider.getLahan(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Lahan>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          'Lahan belum ada',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        Lahan lahan = snapshot.data![index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SensorPage(
+                                  lahanId: lahan.id,
+                                  lahanName: lahan.nama,
+                                  notificationService:
+                                      widget.notificationService,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  height: 50,
+                                  child: Center(
+                                    child: Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color.fromRGBO(224, 255, 24, 1),
+                                      ),
+                                      child: Image.asset(
+                                        "assets/images/siram.png",
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 140,
+                                  child: Text(
+                                    lahan.nama,
+                                    style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         );
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          Lahan lahan = snapshot.data![index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SensorPage(
-                                    lahanId: lahan.id,
-                                    lahanName: lahan.nama,
-                                    notificationService:
-                                        widget.notificationService,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(2),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 60,
-                                    height: 50,
-                                    child: Center(
-                                      child: Container(
-                                        width: 32,
-                                        height: 32,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color:
-                                              Color.fromRGBO(224, 255, 24, 1),
-                                        ),
-                                        child: Image.asset(
-                                          "assets/images/siram.png",
-                                          width: 20,
-                                          height: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 140,
-                                    child: Text(
-                                      lahan.nama,
-                                      style: const TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
+                      },
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
@@ -164,17 +157,13 @@ class _HomeLahanState extends State<HomeLahan> {
 }
 
 class HeaderText extends StatelessWidget {
-  const HeaderText({
-    Key? key,
-  }) : super(key: key);
+  const HeaderText({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          "assets/images/circle-left.png",
-        ),
+        Image.asset("assets/images/circle-left.png"),
         Container(
           margin: const EdgeInsets.only(left: 20, top: 30),
           child: RichText(
@@ -206,9 +195,7 @@ class HeaderText extends StatelessWidget {
 }
 
 class Deskripsi extends StatelessWidget {
-  const Deskripsi({
-    Key? key,
-  }) : super(key: key);
+  const Deskripsi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

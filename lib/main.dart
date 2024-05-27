@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LahanProvider()),
         ChangeNotifierProvider(create: (context) => HistoryProvider()),
         ChangeNotifierProvider(
-            create: (context) =>
-                SensorProvider('your_lahan_id', notificationService)),
+            create: (context) => SensorProvider(0, notificationService)),
       ],
       child: MaterialApp(
           title: 'PPl-Agro SIOP',

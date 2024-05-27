@@ -6,7 +6,7 @@ import 'package:siop_ppl_agro/views/fragment/deletebutton.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
 class SensorPage extends StatelessWidget {
-  final String lahanId;
+  final int lahanId;
   final String lahanName;
   final NotificationService notificationService;
 
@@ -158,7 +158,7 @@ class SensorPage extends StatelessWidget {
                 ),
               ),
             ),
-            HistoryScreen(lahanId: lahanId)
+            HistoryScreen(lahanId: lahanId.toString())
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 class Lahan {
-  final String id;
+  final int id;
   final String nama;
   final int umur;
 
@@ -7,7 +7,7 @@ class Lahan {
 
   factory Lahan.fromMap(Map<String, dynamic> map) {
     return Lahan(
-      id: map['Id'] ?? '',
+      id: map['Id'] ?? 0,
       nama: map['Lahan'] ?? '',
       umur: map['Umur'] ?? 0,
     );

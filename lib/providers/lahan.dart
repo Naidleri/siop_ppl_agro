@@ -6,7 +6,7 @@ import 'package:siop_ppl_agro/services/lahan_services.dart';
 class LahanProvider extends ChangeNotifier {
   final LahanServices _lahanServices = LahanServices();
 
-  Future<String> getLahanId() async {
+  Future<int> getLahanId() async {
     return _lahanServices.getLahanId();
   }
 
@@ -19,7 +19,7 @@ class LahanProvider extends ChangeNotifier {
     return _lahanServices.getLahan();
   }
 
-  Future<void> deleteLahan(String id) async {
+  Future<void> deleteLahan(int id) async {
     await _lahanServices.deleteLahan(id);
     notifyListeners();
   }

@@ -4,7 +4,7 @@ import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/services/sensor_services.dart';
 
 class SensorProvider extends ChangeNotifier {
-  final String lahanId;
+  final int lahanId;
   final SensorService _sensorService = SensorService();
   final NotificationService _notificationService;
 
@@ -13,7 +13,7 @@ class SensorProvider extends ChangeNotifier {
   SensorData? get sensorData => _sensorData;
 
   SensorProvider(this.lahanId, this._notificationService) {
-    _sensorService.getSensorDataStream(lahanId).listen((event) {
+    _sensorService.getSensorDataStream(lahanId.toString()).listen((event) {
       final Map<dynamic, dynamic> data =
           event.snapshot.value as Map<dynamic, dynamic>;
       final int servo = data['servo'] as int;
@@ -34,7 +34,7 @@ class SensorProvider extends ChangeNotifier {
   }
 
   Stream<dynamic> getSensorDataStream() {
-    return _sensorService.getSensorDataStream(lahanId);
+    return _sensorService.getSensorDataStream(lahanId.toString());
   }
 
   void _checknNotification(int servo) {

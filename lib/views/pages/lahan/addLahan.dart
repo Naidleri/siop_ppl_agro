@@ -3,10 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/models/lahanModel.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/services/lahan_services.dart';
+import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
 
 class AddLahan extends StatefulWidget {
-  const AddLahan({Key? key});
+  final NotificationService notificationService;
+  const AddLahan({Key? key, required this.notificationService});
 
   @override
   _AddLahanState createState() => _AddLahanState();
@@ -195,6 +197,8 @@ class _AddLahanState extends State<AddLahan> {
                                         builder: (context) => SensorPage(
                                           lahanId: Id,
                                           lahanName: lahancontroller.text,
+                                          notificationService:
+                                              widget.notificationService,
                                         ),
                                       ),
                                     );

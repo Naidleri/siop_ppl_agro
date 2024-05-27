@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
+import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
 
-Future<void> DeleteLahanButton(BuildContext context, String lahanId) {
+Future<void> DeleteLahanButton(BuildContext context, String lahanId,
+    NotificationService notificationService) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -35,7 +37,8 @@ Future<void> DeleteLahanButton(BuildContext context, String lahanId) {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomeLahan(),
+                              builder: (context) => HomeLahan(
+                                  notificationService: notificationService),
                             ),
                           );
                         },

@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/models/lahanModel.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
+import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/addLahan.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
 
 class HomeLahan extends StatefulWidget {
-  const HomeLahan({Key? key}) : super(key: key);
+  final NotificationService notificationService;
+
+  const HomeLahan({Key? key, required this.notificationService})
+      : super(key: key);
 
   @override
   State<HomeLahan> createState() => _HomeLahanState();
@@ -36,7 +40,9 @@ class _HomeLahanState extends State<HomeLahan> {
           Center(
             child: Container(
               padding: const EdgeInsets.only(right: 20, top: 10, bottom: 2),
-              child: AddLahan(),
+              child: AddLahan(
+                notificationService: widget.notificationService,
+              ),
             ),
           ),
           Container(
@@ -88,6 +94,8 @@ class _HomeLahanState extends State<HomeLahan> {
                                   builder: (context) => SensorPage(
                                     lahanId: lahan.id,
                                     lahanName: lahan.nama,
+                                    notificationService:
+                                        widget.notificationService,
                                   ),
                                 ),
                               );

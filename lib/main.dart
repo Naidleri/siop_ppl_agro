@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/firebase_options.dart';
 import 'package:siop_ppl_agro/providers/history.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
-import 'package:siop_ppl_agro/providers/notifikasi.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
 import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/pages/lahan/lahan.dart';
@@ -23,7 +22,9 @@ void main() async {
   var initializingSetting =
       InitializationSettings(android: initializingSettingsAndroid);
   flutterLocalNotificationsPlugin.initialize(initializingSetting);
+
   await Permission.notification.request();
+
   runApp(MyApp(
     notificationsPlugin: flutterLocalNotificationsPlugin,
   ));
@@ -35,19 +36,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notificationService = NotificationService(notificationsPlugin);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LahanProvider()),
         ChangeNotifierProvider(create: (context) => HistoryProvider()),
         ChangeNotifierProvider(
-            create: (context) => SensorProvider('your_lahan_id')),
-        ProxyProvider<SensorProvider, Notifikasi>(
-          update: (context, sensorProvider, __) {
-            final notificationService =
-                NotificationService(notificationsPlugin);
-            return Notifikasi(notificationService, sensorProvider);
-          },
-        ),
+            create: (context) =>
+                SensorProvider('your_lahan_id', notificationService)),
       ],
       child: MaterialApp(
           title: 'PPl-Agro SIOP',
@@ -55,7 +51,9 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const HomeLahan()),
+          home: HomeLahan(
+            notificationService: notificationService,
+          )),
     );
   }
 }

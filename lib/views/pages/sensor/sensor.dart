@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
+import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/fragment/deletebutton.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/history.dart';
 
 class SensorPage extends StatelessWidget {
   final String lahanId;
   final String lahanName;
+  final NotificationService notificationService;
 
   const SensorPage({
     Key? key,
     required this.lahanId,
     required this.lahanName,
+    required this.notificationService,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SensorProvider(lahanId),
+      create: (context) => SensorProvider(lahanId, notificationService),
       child: Scaffold(
         body: Column(
           children: [
@@ -130,7 +133,7 @@ class SensorPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  DeleteLahanButton(context, lahanId);
+                  DeleteLahanButton(context, lahanId, notificationService);
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 child: const Text(

@@ -17,6 +17,7 @@ class SensorProvider extends ChangeNotifier {
       final Map<dynamic, dynamic> data =
           event.snapshot.value as Map<dynamic, dynamic>;
       final int servo = data['servo'] as int;
+      final String palang = _sensorService.convertServo(servo);
       final int soil = data['soil'] as int;
       final double soilMoisture =
           _sensorService.getSoilMoisturePercentage(soil);
@@ -27,17 +28,14 @@ class SensorProvider extends ChangeNotifier {
         soil: soil,
         soilMoisture: soilMoisture,
         temperature: temperature,
+        palang: palang,
       );
-      _checknNotification(servo);
+      _checkNotification(servo);
       notifyListeners();
     });
   }
 
-  Stream<dynamic> getSensorDataStream() {
-    return _sensorService.getSensorDataStream(lahanId.toString());
-  }
-
-  void _checknNotification(int servo) {
+  void _checkNotification(int servo) {
     if (servo == 90) {
       _notificationService.showNotification(
           "siram otomatis", "Lahan telah berhasil disiram");

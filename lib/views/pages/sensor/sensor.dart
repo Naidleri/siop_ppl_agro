@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/models/lahanModel.dart';
+import 'package:siop_ppl_agro/models/sensorModel.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
 import 'package:siop_ppl_agro/providers/sensor.dart';
 import 'package:siop_ppl_agro/services/notifikasi_services.dart';
@@ -70,89 +71,69 @@ class SensorPage extends StatelessWidget {
             ),
             Consumer<SensorProvider>(
               builder: (context, sensorProvider, child) {
-                return StreamBuilder(
-                  stream: sensorProvider.getSensorDataStream(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot sensorSnapshot) {
-                    if (sensorSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else {
-                      final sensorData = sensorSnapshot.data?.snapshot?.value;
-                      if (sensorData != null) {
-                        final temperature =
-                            sensorData['temperature'] ?? 'Error';
-                        final soilNormal = sensorData['soil'];
-                        final soilMoisture =
-                            sensorData['soilMoisture'] ?? 'Error';
-                        final servo = sensorData['servo'] ?? 'Error';
+                final sensorData = sensorProvider.sensorData;
 
-                        return FutureBuilder<Lahan?>(
-                          future: _getLahanById(lahanId),
-                          builder: (context, lahanSnapshot) {
-                            if (lahanSnapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return CircularProgressIndicator();
-                            } else if (lahanSnapshot.hasData) {
-                              final lahan = lahanSnapshot.data;
-                              final umurLahan =
-                                  lahan?.umur ?? 'Tidak diketahui';
+                if (sensorData == null) {
+                  return Text("Sensor belum terdeteksi");
+                }
 
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '$lahanName',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    '$umurLahan bulan',
-                                    style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Temperature: $temperature °C',
-                                    style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(24, 152, 119, 1),
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Soil Moisture : $soilNormal',
-                                    style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(24, 152, 119, 1),
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Palang: $servo',
-                                    style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(24, 152, 119, 1),
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            } else {
-                              return const Text("Data lahan tidak ditemukan");
-                            }
-                          },
-                        );
-                      } else {
-                        return const Text("Sensor belum terdeteksi");
-                      }
-                    }
-                  },
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '$lahanName',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    FutureBuilder<Lahan?>(
+                      future: _getLahanById(lahanId),
+                      builder: (context, lahanSnapshot) {
+                        if (lahanSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (lahanSnapshot.hasData) {
+                          final lahan = lahanSnapshot.data;
+                          final umurLahan = lahan?.umur ?? 'Tidak diketahui';
+                          return Text(
+                            '$umurLahan bulan',
+                            style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          );
+                        } else {
+                          return const Text("Data lahan tidak ditemukan");
+                        }
+                      },
+                    ),
+                    Text(
+                      'Suhu : ${sensorData.temperature} °C',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: Color.fromRGBO(24, 152, 119, 1),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      'Kelembapan tanah : ${sensorData.soilMoisture}%',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: Color.fromRGBO(24, 152, 119, 1),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      '${sensorData.palang}',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: Color.fromRGBO(24, 152, 119, 1),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 );
               },
             ),

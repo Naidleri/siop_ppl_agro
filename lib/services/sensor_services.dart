@@ -15,4 +15,12 @@ class SensorService {
     final double normalizedSoil = (soilValue - 1060) / (2500 - 1060);
     return (1 - normalizedSoil) * 100;
   }
+
+  String convertServo(int servoValue) {
+    if (servoValue == 90) {
+      return 'Palang terbuka';
+    } else {
+      return 'Palang tertutup';
+    }
+  }
 }

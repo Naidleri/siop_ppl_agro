@@ -32,6 +32,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final FlutterLocalNotificationsPlugin notificationsPlugin;
+
   const MyApp({Key? key, required this.notificationsPlugin}) : super(key: key);
 
   @override
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
+          debugShowCheckedModeBanner: false,
           home: HomeLahan(
             notificationService: notificationService,
           )),

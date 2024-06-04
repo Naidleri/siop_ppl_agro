@@ -19,8 +19,7 @@ class SensorProvider extends ChangeNotifier {
       final int servo = data['servo'] as int;
       final String palang = _sensorService.convertServo(servo);
       final int soil = data['soil'] as int;
-      final double soilMoisture =
-          _sensorService.getSoilMoisturePercentage(soil);
+      final int soilMoisture = _sensorService.getSoilMoisturePercentage(soil);
       final double temperature = data['temperature'] as double;
 
       _sensorData = SensorData(

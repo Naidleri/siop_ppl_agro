@@ -1,7 +1,7 @@
 class SensorData {
   final int servo;
   final int soil;
-  final double soilMoisture;
+  final int soilMoisture;
   final double temperature;
   final String palang;
 

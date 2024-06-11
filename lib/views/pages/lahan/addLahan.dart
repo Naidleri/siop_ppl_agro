@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:siop_ppl_agro/models/lahanModel.dart';
 import 'package:siop_ppl_agro/providers/lahan.dart';
-import 'package:siop_ppl_agro/services/lahan_services.dart';
 import 'package:siop_ppl_agro/services/notifikasi_services.dart';
 import 'package:siop_ppl_agro/views/pages/sensor/sensor.dart';
 
@@ -242,6 +241,7 @@ class _AddLahanState extends State<AddLahan> {
           fontWeight: FontWeight.w700,
           color: Colors.white,
         ),
+        
       ),
     );
   }
